@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button
+} from 'react-native';
 import PropTypes from 'prop-types';
 
 export default class HomeScreen extends React.Component {
@@ -9,9 +15,15 @@ export default class HomeScreen extends React.Component {
     }).isRequired,
   }
 
+  static navigationOptions = {
+    title: 'Home',
+  };
+
   state = {
     welcomeText: 'Hello, World!'
   }
+
+
 
   render() {
     const { welcomeText } = this.state;
@@ -19,9 +31,8 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>{welcomeText}</Text>
-        <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} style={{ width: 293, height: 110 }} />
-        <Button onPress={() => this.setState({ welcomeText: 'Pls Kill Me' })} title="Click Me!" />
+        <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} style={{ width: 420, height: 100 }} />
+        <Text style={styles.header}>{welcomeText}</Text>
         <Button onPress={() => navigation.navigate('Stores', { message: 'This message was brought to you by HomeScreen' })} title="Stores" />
       </View>
     );
@@ -31,8 +42,11 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
+  header: {
+    fontSize: 32,
+    paddingBottom: 16,
+  }
 });

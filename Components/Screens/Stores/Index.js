@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { PropTypes } from 'prop-types';
 
 export default class HomeScreen extends React.Component {
@@ -8,6 +8,10 @@ export default class HomeScreen extends React.Component {
       navigate: PropTypes.func.isRequired,
     }).isRequired,
   }
+
+  static navigationOptions = {
+    title: 'Stores',
+  };
 
   state = {
     screenTitle: 'All the stores'
@@ -19,11 +23,9 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>{screenTitle}</Text>
-        <Button onPress={() => navigation.navigate('Home')} title="Home" />
+        <Text style={styles.header}>{screenTitle}</Text>
 
         <Text>{navigation.getParam('message', 'no message')}</Text>
-        <Text>{navigation.getParam('itemId', 'no itemId')}</Text>
       </View>
     );
   }
@@ -32,8 +34,11 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     paddingTop: 40,
   },
+  header: {
+    fontSize: 32,
+    paddingBottom: 16,
+  }
 });

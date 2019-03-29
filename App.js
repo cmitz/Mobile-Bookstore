@@ -1,13 +1,33 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import React from 'react';
+import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import { setCustomText } from 'react-native-global-props';
 
-import HomeScreen from './Components/Screens/HomeScreen';
-import StoresScreen from './Components/Screens/StoresScreen';
+import DashboardNavigator from './Components/Navigators/DashboardNavigator';
+import StoresNavigator from './Components/Navigators/StoresNavigator';
 
-const AppNavigator = createStackNavigator({
-  Home: HomeScreen,
-  Stores: StoresScreen
+const AppNavigator = createDrawerNavigator({
+  Dashboard: {
+    screen: DashboardNavigator
+  },
+  Stores: {
+    screen: StoresNavigator
+  },
 }, {
-  initialRouteName: 'Home'
+  initialRouteName: 'Dashboard',
+  navigationOptions: {
+    drawerLabel: 'Navigation Drawer',
+  },
 });
 
-export default createAppContainer(AppNavigator);
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class App extends React.Component {
+  componentDidMount() {
+    setCustomText({ style: { fontFamily: 'Roboto' } });
+  }
+
+  render() {
+    return <AppContainer />;
+  }
+}
