@@ -10,14 +10,20 @@ export default class HomeScreen extends React.Component {
   }
 
   state = {
-    screenTitle: "All the stores"
+    screenTitle: 'All the stores'
   }
 
   render() {
+    const { screenTitle } = this.state;
+    const { navigation } = this.props;
+
     return (
       <View style={styles.container}>
-        <Text>{this.state.screenTitle}</Text>
-        <Button onPress={() => this.props.navigation.navigate('Home')} title="Home" />
+        <Text>{screenTitle}</Text>
+        <Button onPress={() => navigation.navigate('Home')} title="Home" />
+
+        <Text>{navigation.getParam('message', 'no message')}</Text>
+        <Text>{navigation.getParam('itemId', 'no itemId')}</Text>
       </View>
     );
   }

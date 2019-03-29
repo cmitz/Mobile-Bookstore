@@ -10,16 +10,19 @@ export default class HomeScreen extends React.Component {
   }
 
   state = {
-    welcomeText: "Hello, World!"
+    welcomeText: 'Hello, World!'
   }
 
   render() {
+    const { welcomeText } = this.state;
+    const { navigation } = this.props;
+
     return (
       <View style={styles.container}>
-        <Text>{this.state.welcomeText}</Text>
-        <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg" }} style={{width: 293, height: 110}} />
+        <Text>{welcomeText}</Text>
+        <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} style={{ width: 293, height: 110 }} />
         <Button onPress={() => this.setState({ welcomeText: 'Pls Kill Me' })} title="Click Me!" />
-        <Button onPress={() => this.props.navigation.navigate('Stores')} title="Stores" />
+        <Button onPress={() => navigation.navigate('Stores', { message: 'This message was brought to you by HomeScreen' })} title="Stores" />
       </View>
     );
   }
