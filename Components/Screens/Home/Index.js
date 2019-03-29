@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button
-} from 'react-native';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import PropTypes from 'prop-types';
 
 export default class HomeScreen extends React.Component {
@@ -22,8 +16,6 @@ export default class HomeScreen extends React.Component {
   state = {
     welcomeText: 'Hello, World!'
   }
-
-
 
   render() {
     const { welcomeText } = this.state;
