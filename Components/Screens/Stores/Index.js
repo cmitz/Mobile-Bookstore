@@ -33,17 +33,17 @@ class HomeScreen extends React.Component {
         <Text>{storesLoading ? 'Loading' : 'Finished loading'}</Text>
 
         <FlatList
+          style={styles.list}
           data={rootStore.storeStore.stores}
           keyExtractor={store => store.id}
           renderItem={store => (
-            <View key={store.item.id}>
+            <View style={styles.listItem} key={store.item.id}>
               <Text>Name: {store.item.name}; Books: {store.item.totalBooks}</Text>
             </View>
           )}
         />
 
-      <Text>Number of stores: {rootStore.storeStore.totalStores}</Text>
-      {/* <Text>{JSON.stringify(rootStore.storeStore.stores, null, 2)}</Text> */}
+        <Text>Number of stores: {rootStore.storeStore.totalStores}</Text>
       </View>
     );
   }
@@ -52,17 +52,33 @@ class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'flex-start',
   },
   header: {
+    alignSelf: 'center',
+    justifyContent: 'center',
     fontSize: 32,
-    marginTop: 40,
+    marginTop: 16,
     paddingBottom: 16,
   },
   code: {
     fontFamily: 'monospace'
   },
+  list: {
+    borderBottomWidth: 2,
+    borderColor: '#4e4e4e',
+  },
+  listItem: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    backgroundColor: 'powderblue',
+    borderWidth: 1,
+    borderColor: '#aaaaaa',
+    padding: 16
+  }
 });
 
 export default HomeScreen;
