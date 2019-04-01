@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import defaultMenuIcon from '../../assets/icon.png';
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
-  },
+  }
 });
 
 export default DashboardNavigator;

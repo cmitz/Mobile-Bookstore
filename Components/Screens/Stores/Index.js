@@ -4,7 +4,6 @@ import { PropTypes } from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { stylesheet } from '../../../Styles/stylesheet';
 @inject('apiKeysStore', 'jsonApiStore')
 @observer
 class HomeScreen extends React.Component {
@@ -39,8 +38,8 @@ class HomeScreen extends React.Component {
     const { jsonApiStore } = this.props;
 
     return (
-      <View style={stylesheet.container}>
-        <Text style={stylesheet.header}>{screenTitle}</Text>
+      <View style={styles.container}>
+        <Text style={styles.header}>{screenTitle}</Text>
         <Text>{storesLoading ? 'Loading' : 'Finished loading'}</Text>
 
         <FlatList
@@ -48,7 +47,7 @@ class HomeScreen extends React.Component {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <View>
-              <Text style={stylesheet.code}>{JSON.stringify(item, null, 2)}</Text>
+              <Text style={styles.code}>{JSON.stringify(item, null, 2)}</Text>
             </View>
           )}
         />
@@ -56,5 +55,23 @@ class HomeScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  header: {
+    fontSize: 32,
+    marginTop: 40,
+    paddingBottom: 16,
+  },
+  code: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 40,
+  },
+});
 
 export default HomeScreen;
