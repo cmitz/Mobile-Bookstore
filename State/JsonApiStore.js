@@ -24,8 +24,8 @@ export default class JsonApiStore {
 
     try {
       const response = yield fetch(`${JsonApiStore.baseUrl}/stores`);
-      const data = yield response.json();
-      console.log(data)
+      const { data } = yield response.json();
+      console.log('Data = ', data)
       this.stores = data;
       this.state = 'success';
     } catch (error) {
