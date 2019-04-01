@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { inject, observer } from 'mobx-react';
+import { getSnapshot } from 'mobx-state-tree';
 import { FlatList } from 'react-native-gesture-handler';
 
-@inject('apiKeysStore', 'jsonApiStore')
+@inject('rootStore')
 @observer
 class HomeScreen extends React.Component {
   static propTypes = {
@@ -22,20 +23,9 @@ class HomeScreen extends React.Component {
     storesLoading: false
   }
 
-  async componentDidMount() {
-    const { jsonApiStore, navigation } = this.props;
-
-    try {
-      await jsonApiStore.fetchStores();
-    } catch (e) {
-      console.error(e);
-      navigation.navigate("Dashboard");
-    }
-  }
-
   render() {
     const { screenTitle, storesLoading } = this.state;
-    const { jsonApiStore } = this.props;
+    const { rootStore } = this.props;
 
     return (
       <View style={styles.container}>
@@ -43,14 +33,17 @@ class HomeScreen extends React.Component {
         <Text>{storesLoading ? 'Loading' : 'Finished loading'}</Text>
 
         <FlatList
-          data={jsonApiStore.stores}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <View>
-              <Text style={styles.code}>{JSON.stringify(item, null, 2)}</Text>
+          data={rootStore.storeStore.stores}
+          keyExtractor={store => store.id}
+          renderItem={store => (
+            <View key={store.item.id}>
+              <Text>Name: {store.item.name}; Books: {store.item.totalBooks}</Text>
             </View>
           )}
         />
+
+      <Text>Number of stores: {rootStore.storeStore.totalStores}</Text>
+      {/* <Text>{JSON.stringify(rootStore.storeStore.stores, null, 2)}</Text> */}
       </View>
     );
   }
@@ -68,9 +61,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   code: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 40,
+    fontFamily: 'monospace'
   },
 });
 

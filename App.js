@@ -7,7 +7,7 @@ import { Provider } from 'mobx-react';
 import DashboardNavigator from './Components/Navigators/DashboardNavigator';
 import StoresNavigator from './Components/Navigators/StoresNavigator';
 
-import Stores from './State/stores';
+import { RootStore } from './Stores/RootStore';
 
 const AppNavigator = createDrawerNavigator({
   Dashboard: {
@@ -26,6 +26,8 @@ const AppNavigator = createDrawerNavigator({
 
 const AppContainer = createAppContainer(AppNavigator);
 
+const store = RootStore.create();
+
 export default class App extends React.Component {
   componentDidMount() {
     setCustomText({ style: { fontFamily: 'Roboto' } });
@@ -33,7 +35,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Provider {...Stores}>
+      <Provider rootStore={store} >
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ececec' }}>
           <AppContainer />
         </SafeAreaView>
