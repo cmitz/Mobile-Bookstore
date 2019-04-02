@@ -2,16 +2,17 @@ import { types } from 'mobx-state-tree';
 
 export const LocationStore = types
   .model('LocationStore', {
-    latitude: '0.000',
-    longtitude: '0.000',
+    latitude: 0.000,
+    longitude: 0.000,
     updatedAt: types.optional(types.Date, () => new Date()),
   })
   .actions(self => ({
-    updateLocation({ latitude, longtitude }) {
-      this.latitude = latitude;
-      this.longtitude = longtitude;
+    updateLocation({ latitude, longitude }) {
+      console.log(latitude, longitude);
+      self.latitude = latitude;
+      self.longitude = longitude;
 
-      this.updatedAt = new Date();
+      self.updatedAt = new Date();
     },
   }));
 

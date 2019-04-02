@@ -30,7 +30,7 @@ const AppNavigator = createDrawerNavigator({
 
 const AppContainer = createAppContainer(AppNavigator);
 
-const store = RootStore.create();
+const rootStore = RootStore.create();
 
 export default class App extends React.Component {
   state = {
@@ -51,7 +51,7 @@ export default class App extends React.Component {
   render() {
     const { loading } = this.state;
     return (
-      <Provider rootStore={store} >
+      <Provider rootStore={rootStore} >
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ececec' }}>
           {loading ? <Expo.AppLoading />
             : <AppContainer />
