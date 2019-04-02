@@ -3,7 +3,7 @@ import { TaskManager } from 'expo';
 export const BACKGROUND_TASK_LOCATION_TRACKING = 'backgroundTask/locationTracking';
 
 export const defineLocationBackgroundTask = () => {
-  TaskManager.defineTask(BACKGROUND_TASK_LOCATION_TRACKING, async ({ data: { locations }, error}) => {
+  TaskManager.defineTask(BACKGROUND_TASK_LOCATION_TRACKING, async ({ data: { locations }, error }) => {
     if (error) {
       console.error(error);
     } else {
@@ -19,7 +19,7 @@ export const defineLocationBackgroundTask = () => {
           latitude,
           longitude
         })
-      })
+      });
     }
   });
-}
+};

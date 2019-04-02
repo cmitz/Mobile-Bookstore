@@ -5,7 +5,7 @@ import { BookStore } from './BookStore';
 import { AuthorStore } from './AuthorStore';
 import { LocationStore } from './LocationStore';
 
-export const RootStore = types
+const RootStore = types
   .model({
     storeStore: types.optional(StoreStore, {}),
     bookStore: types.optional(BookStore, {}),
@@ -17,7 +17,7 @@ export const RootStore = types
     get isLoading() {
       return self.storeStore.isLoading === 'pending'
         || self.bookStore.isLoading === 'pending'
-        || self.authorStore.isLoading === 'pending'
+        || self.authorStore.isLoading === 'pending';
     }
   }))
   .actions(self => ({
@@ -28,3 +28,5 @@ export const RootStore = types
     },
   }));
 
+
+export default RootStore;

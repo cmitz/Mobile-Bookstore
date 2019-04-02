@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, AsyncStorage } from 'react-native';
-import { Font } from 'expo';
+import { Font, AppLoading } from 'expo';
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import { setCustomText } from 'react-native-global-props';
 import { Provider } from 'mobx-react';
@@ -11,7 +11,7 @@ import DashboardNavigator from './Components/Navigators/DashboardNavigator';
 import StoresNavigator from './Components/Navigators/StoresNavigator';
 import Sidebar from './Components/Sidebar';
 
-import { RootStore } from './Stores/RootStore';
+import RootStore from './Stores/RootStore';
 
 import { defineLocationBackgroundTask } from './Tasks';
 
@@ -41,13 +41,13 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     await Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
       ...Ionicons.font,
     });
     setCustomText({ style: { fontFamily: 'Roboto' } });
 
-    rootStore = await this.loadMobxStateTree();
+    const rootStore = await this.loadMobxStateTree();
 
     this.setState({ loading: false, rootStore });
   }
@@ -65,7 +65,7 @@ export default class App extends React.Component {
     }
     const rootStore = RootStore.create(initialState);
 
-    onSnapshot(rootStore, snapshot => {
+    onSnapshot(rootStore, (snapshot) => {
       try {
         AsyncStorage.setItem('bookStoreApp', JSON.stringify(snapshot));
       } catch (error) {
@@ -78,7 +78,7 @@ export default class App extends React.Component {
 
   render() {
     const { loading, rootStore } = this.state;
-    return loading ? <Expo.AppLoading /> : (
+    return loading ? <AppLoading /> : (
       <Provider rootStore={rootStore} >
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ececec' }}>
           <AppContainer />

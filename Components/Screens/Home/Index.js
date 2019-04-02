@@ -1,9 +1,23 @@
 import React from 'react';
-import { StyleSheet, Image, Platform, View } from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  Platform,
+  View
+} from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import { Container, Content, Card, CardItem, Body, Button, Text, Spinner } from 'native-base';
+import {
+  Container,
+  Content,
+  Card,
+  CardItem,
+  Body,
+  Button,
+  Text,
+  Spinner
+} from 'native-base';
 
 import { BACKGROUND_TASK_LOCATION_TRACKING } from '../../../Tasks';
 
@@ -36,8 +50,18 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  async getLocation() {
+    const { counter } = this.state;
+    const { rootStore: { locationStore } } = this.props;
+
+    const location = await Location.getCurrentPositionAsync({});
+    this.setState({ locationStatus: 'Location retrieved', counter: counter + 1 });
+
+    locationStore.updateLocation(location.coords);
+  }
+
   async askLocationPermission() {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION)
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
     switch (status) {
       case 'granted':
@@ -54,16 +78,6 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  async getLocation() {
-    const { counter } = this.state;
-    const { locationStore } = this.props.rootStore;
-
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ locationStatus: 'Location retrieved', counter: counter + 1 });
-
-    locationStore.updateLocation(location.coords);
-  }
-
   async startBackgroundUpdate() {
     await Location.startLocationUpdatesAsync(BACKGROUND_TASK_LOCATION_TRACKING, {
       accuracy: Location.Accuracy.Low,
@@ -77,14 +91,17 @@ export default class HomeScreen extends React.Component {
   }
 
   async backgroundLocationRunning() {
-    const result = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_TASK_LOCATION_TRACKING);
-    console.log(result);
-    return result;
+    Location.hasStartedLocationUpdatesAsync(BACKGROUND_TASK_LOCATION_TRACKING);
   }
 
   render() {
-    const { welcomeText, locationStatus, counter } = this.state;
-    const { navigation, rootStore } = this.props;
+    const {
+      welcomeText,
+      locationStatus,
+      permissionStatus,
+      counter
+    } = this.state;
+    const { rootStore } = this.props;
 
     const headerimage = require('../../../assets/markus-spiske-221494-unsplash.jpg');
 
@@ -95,25 +112,25 @@ export default class HomeScreen extends React.Component {
         <Content padder contentContainerStyle={styles.content}>
           <Text style={styles.header}>{welcomeText}</Text>
 
-          {/* <Button onPress={() => navigation.navigate('Stores', { message: 'This message was brought to you by HomeScreen' })}>
+          {/* <Button
+            onPress={() => {
+              navigation.navigate('Stores', {
+                message: 'This message was brought to you by HomeScreen'
+              });
+            }}
+            >
             <Text>Stores</Text>
           </Button> */}
 
-          <Button
-            // disabled={this.backgroundLocationRunning()}
-            onPress={() => this.startBackgroundUpdate()}
-          >
+          <Button onPress={() => this.startBackgroundUpdate()}>
             <Text>Enable background location updates</Text>
           </Button>
 
-          <Button
-            // disabled={!this.backgroundLocationRunning()}
-            onPress={() => this.stopBackgroundUpdate()}
-          >
+          <Button onPress={() => this.stopBackgroundUpdate()}>
             <Text>Disable background location updates</Text>
           </Button>
 
-          <View style={styles.divider}/>
+          <View style={styles.divider} />
 
           <Card>
             <CardItem header bordered>
@@ -122,8 +139,21 @@ export default class HomeScreen extends React.Component {
 
             <CardItem>
               <Body>
-                <Text>Location status: <Text style={styles.code}>{locationStatus}</Text></Text>
-                <Text>You are at {`lat: ${rootStore.locationStore.latitude}; long: ${rootStore.locationStore.longitude}.`}</Text>
+                <Text>
+                  Location status:
+                  <Text style={styles.code}>{locationStatus}</Text>
+                </Text>
+
+                <Text>
+                  Permission status:
+                  <Text style={styles.code}>{permissionStatus}</Text>
+                </Text>
+
+                <Text>
+                  You are at
+                  {`lat: ${rootStore.locationStore.latitude}; long: ${rootStore.locationStore.longitude}.`}
+                </Text>
+
                 <Button
                   onPress={() => {
                     this.setState({ locationStatus: 'Pending' });
