@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, AsyncStorage } from 'react-native';
 import { Font } from 'expo';
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import { setCustomText } from 'react-native-global-props';
@@ -11,6 +11,7 @@ import StoresNavigator from './Components/Navigators/StoresNavigator';
 import Sidebar from './Components/Sidebar';
 
 import { RootStore } from './Stores/RootStore';
+import { onSnapshot } from 'mobx-state-tree';
 
 const AppNavigator = createDrawerNavigator({
   Dashboard: {
@@ -30,11 +31,10 @@ const AppNavigator = createDrawerNavigator({
 
 const AppContainer = createAppContainer(AppNavigator);
 
-const rootStore = RootStore.create();
-
 export default class App extends React.Component {
   state = {
-    loading: true
+    loading: true,
+    rootStore: null
   }
 
   async componentDidMount() {
@@ -45,17 +45,41 @@ export default class App extends React.Component {
     });
     setCustomText({ style: { fontFamily: 'Roboto' } });
 
-    this.setState({ loading: false });
+    rootStore = await this.loadMobxStateTree();
+
+    this.setState({ loading: false, rootStore });
+  }
+
+  async loadMobxStateTree() {
+    let initialState = {};
+
+    const potential = await AsyncStorage.getItem('bookStoreApp');
+    if (potential) {
+      const json = JSON.parse(potential);
+
+      if (RootStore.is(json)) {
+        initialState = json;
+      }
+    }
+    const rootStore = RootStore.create(initialState);
+
+    onSnapshot(rootStore, snapshot => {
+      try {
+        AsyncStorage.setItem('bookStoreApp', JSON.stringify(snapshot));
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    return rootStore;
   }
 
   render() {
-    const { loading } = this.state;
-    return (
+    const { loading, rootStore } = this.state;
+    return loading ? <Expo.AppLoading /> : (
       <Provider rootStore={rootStore} >
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ececec' }}>
-          {loading ? <Expo.AppLoading />
-            : <AppContainer />
-          }
+          <AppContainer />
         </SafeAreaView>
       </Provider>
     );
