@@ -79,7 +79,7 @@ export default class App extends React.Component {
   render() {
     const { loading, rootStore } = this.state;
     return loading ? <AppLoading /> : (
-      <Provider rootStore={rootStore} >
+      <Provider rootStore={rootStore}>
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ececec' }}>
           <AppContainer />
         </SafeAreaView>
