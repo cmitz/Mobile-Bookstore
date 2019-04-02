@@ -1,8 +1,10 @@
 module.exports = {
   'extends': 'airbnb',
   'parser': 'babel-eslint',
-  'ecmaFeatures': {
-    'experimentalDecorators': true,
+  'parserOptions': {
+    'ecmaFeatures': {
+      'legacyDecorators': true
+    }
   },
   'env': {
     'jest': true,
@@ -12,9 +14,9 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
     'react/prop-types': 'off',
     'comma-dangle': 'off',
-    'func-names': {
+    'func-names': ['error', 'always', {
       'generators': 'never'
-    },
+    }],
   },
   'globals': {
     "fetch": false
