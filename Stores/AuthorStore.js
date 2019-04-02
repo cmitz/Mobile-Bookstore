@@ -1,30 +1,30 @@
 import { types, flow } from 'mobx-state-tree';
 
-import { Book } from '../Models/Book';
+import { Author } from '../Models/Author';
 
 const baseUrl = 'http://jsonapiplayground.reyesoft.com/v2'
 
-export const BookStore = types
-  .model('BookStore', {
+export const AuthorStore = types
+  .model('AuthorStore', {
     loadingState: types.optional(types.enumeration('LoadingState', ['pending', 'success', 'error']), 'success'),
-    books: types.array(Book)
+    authors: types.array(Author)
   })
   .views(self => ({
     // Find By ID?
   }))
   .actions(self => ({
-    updateBooks(json) {
-      json.forEach(book => {
-        self.books.push(Book.create({
-          id: book.id,
-          title: book.attributes.title,
-          isbn: book.attributes.isbn
+    updateAuthors(json) {
+      json.forEach(author => {
+        self.authors.push(Author.create({
+          id: author.id,
+          name: author.attributes.name,
+          birthplace: author.attributes.birthplace
         }));
       });
     },
 
-    fetchBooks: flow(function* fetchBooks({ page, filters }) {
-      this.books = [];
+    fetchAuthors: flow(function* fetchAuthors({ page, filters }) {
+      this.authors = [];
       this.loadingState = 'pending';
 
       const paginationString = `page[number]=${page}`;
@@ -33,10 +33,10 @@ export const BookStore = types
       });
 
       try {
-        const response = yield fetch(`${baseUrl}/books?${paginationString}${filterString}`);
+        const response = yield fetch(`${baseUrl}/authors?${paginationString}${filterString}`);
         const data = yield response.json();
 
-        self.updateBooks(data.data);
+        self.updateAuthors(data.data);
         this.loadingState = 'success';
       } catch (error) {
         console.log(error);

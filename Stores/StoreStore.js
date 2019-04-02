@@ -6,7 +6,7 @@ const baseUrl = 'http://jsonapiplayground.reyesoft.com/v2'
 
 export const StoreStore = types
   .model('StoreStore', {
-    loadingState: 'success',
+    loadingState: types.optional(types.enumeration('LoadingState', ['pending', 'success', 'error']), 'success'),
     stores: types.array(Store)
   })
   .views(self => ({

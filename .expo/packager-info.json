@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": null,
-  "packagerPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 6033,
   "expoServerNgrokUrl": "https://b3-6gk.anonymous.rn-bookstore.exp.direct",
   "packagerNgrokUrl": "https://packager.b3-6gk.anonymous.rn-bookstore.exp.direct",
-  "ngrokPid": 7976,
+  "ngrokPid": 6134,
   "webpackServerPort": null
 }
