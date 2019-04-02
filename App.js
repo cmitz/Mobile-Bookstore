@@ -33,21 +33,29 @@ const AppContainer = createAppContainer(AppNavigator);
 const store = RootStore.create();
 
 export default class App extends React.Component {
+  state = {
+    loading: true
+  }
+
   async componentDidMount() {
     await Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
       ...Ionicons.font,
     });
-
     setCustomText({ style: { fontFamily: 'Roboto' } });
+
+    this.setState({ loading: false });
   }
 
   render() {
+    const { loading } = this.state;
     return (
       <Provider rootStore={store} >
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ececec' }}>
-          <AppContainer />
+          {loading ? <Expo.AppLoading />
+            : <AppContainer />
+          }
         </SafeAreaView>
       </Provider>
     );

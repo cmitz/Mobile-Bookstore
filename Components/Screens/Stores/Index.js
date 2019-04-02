@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from 'native-base';
 import { PropTypes } from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import { getSnapshot } from 'mobx-state-tree';
 import { FlatList } from 'react-native-gesture-handler';
 
 @inject('rootStore')
