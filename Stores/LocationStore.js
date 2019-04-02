@@ -8,7 +8,6 @@ export const LocationStore = types
   })
   .actions(self => ({
     updateLocation({ latitude, longitude }) {
-      console.log(latitude, longitude);
       self.latitude = latitude;
       self.longitude = longitude;
 

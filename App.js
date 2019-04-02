@@ -4,6 +4,7 @@ import { Font } from 'expo';
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import { setCustomText } from 'react-native-global-props';
 import { Provider } from 'mobx-react';
+import { onSnapshot } from 'mobx-state-tree';
 import { Ionicons } from '@expo/vector-icons';
 
 import DashboardNavigator from './Components/Navigators/DashboardNavigator';
@@ -11,7 +12,8 @@ import StoresNavigator from './Components/Navigators/StoresNavigator';
 import Sidebar from './Components/Sidebar';
 
 import { RootStore } from './Stores/RootStore';
-import { onSnapshot } from 'mobx-state-tree';
+
+import { defineLocationBackgroundTask } from './Tasks';
 
 const AppNavigator = createDrawerNavigator({
   Dashboard: {
@@ -28,8 +30,8 @@ const AppNavigator = createDrawerNavigator({
   },
 });
 
-
 const AppContainer = createAppContainer(AppNavigator);
+defineLocationBackgroundTask();
 
 export default class App extends React.Component {
   state = {
