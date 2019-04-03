@@ -15,7 +15,7 @@ export const defineLocationBackgroundTask = async () => {
         const location = locations[0];
         const { latitude, longitude } = location.coords;
 
-        fetch('http://webhook.site/7a50c22b-2b3e-4912-8d5b-33a024ce21b0', {
+        fetch(PUSH_ENDPOINT, {
           method: 'POST',
           body: JSON.stringify({
             latitude,
