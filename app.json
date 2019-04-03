@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "React Native Bookstore",
-    "slug": "rn_bookstore",
+    "slug": "rn-bookstore",
     "privacy": "unlisted",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -22,7 +22,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "nl.cofano.rnbookstore"
+    },
     "ios": {
+      "bundleIdentifier": "nl.cofano.rnbookstore",
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": [
