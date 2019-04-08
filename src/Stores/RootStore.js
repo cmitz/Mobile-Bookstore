@@ -20,11 +20,11 @@ const RootStore = types
         || self.authorStore.isLoading === 'pending';
     }
   }))
-  .actions(self => ({
+  .actions((/* self */) => ({
     afterCreate() {
-      self.storeStore.fetchStores({ page: 1, filters: [] });
-      self.bookStore.fetchBooks({ page: 1, filters: [] });
-      self.authorStore.fetchAuthors({ page: 1, filters: [] });
+      // self.storeStore.fetchStores({ page: 1, filters: [] });
+      // self.bookStore.fetchBooks({ page: 1, filters: [] });
+      // self.authorStore.fetchAuthors({ page: 1, filters: [] });
     },
   }));
 

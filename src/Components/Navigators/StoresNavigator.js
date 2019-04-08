@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
-import defaultMenuIcon from '../../assets/icon.png';
+import defaultMenuIcon from '../../../assets/icon.png';
 
 import NavigationDrawerStructure from '../NavigationDrawerStructure';
 import StoresScreen from '../Screens/Stores/Index';

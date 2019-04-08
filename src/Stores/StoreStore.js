@@ -1,8 +1,8 @@
-import { types, flow, getParent } from 'mobx-state-tree';
+import { types, flow } from 'mobx-state-tree';
 
 import { Store } from '../Models/Store';
 
-const baseUrl = 'http://jsonapiplayground.reyesoft.com/v2'
+const baseUrl = 'http://jsonapiplayground.reyesoft.com/v2';
 
 export const StoreStore = types
   .model('StoreStore', {
@@ -16,7 +16,7 @@ export const StoreStore = types
   }))
   .actions(self => ({
     updateStores(json) {
-      json.forEach(store => {
+      json.forEach((store) => {
         self.stores.push(Store.create({
           id: store.id,
           name: store.attributes.name,
@@ -25,14 +25,12 @@ export const StoreStore = types
       });
     },
 
-    fetchStores: flow(function* fetchStores({ page, filters }) {
+    fetchStores: flow(function* ({ page, filters }) {
       this.stores = [];
       this.loadingState = 'pending';
 
       const paginationString = `page[number]=${page}`;
-      const filterString = filters.map(({key, value}) => {
-        return `&filter[${key}]=${value}`;
-      });
+      const filterString = filters.map(({ key, value }) => (`&filter[${key}]=${value}`));
 
       try {
         const response = yield fetch(`${baseUrl}/stores?${paginationString}${filterString}`);
@@ -45,4 +43,4 @@ export const StoreStore = types
         this.loadingState = 'error';
       }
     }),
-  }))
+  }));

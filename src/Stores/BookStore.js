@@ -2,19 +2,16 @@ import { types, flow } from 'mobx-state-tree';
 
 import { Book } from '../Models/Book';
 
-const baseUrl = 'http://jsonapiplayground.reyesoft.com/v2'
+const baseUrl = 'http://jsonapiplayground.reyesoft.com/v2';
 
 export const BookStore = types
   .model('BookStore', {
     loadingState: types.optional(types.enumeration('LoadingState', ['pending', 'success', 'error']), 'success'),
     books: types.array(Book)
   })
-  .views(self => ({
-    // Find By ID?
-  }))
   .actions(self => ({
     updateBooks(json) {
-      json.forEach(book => {
+      json.forEach((book) => {
         self.books.push(Book.create({
           id: book.id,
           title: book.attributes.title,
@@ -23,14 +20,12 @@ export const BookStore = types
       });
     },
 
-    fetchBooks: flow(function* fetchBooks({ page, filters }) {
+    fetchBooks: flow(function* ({ page, filters }) {
       this.books = [];
       this.loadingState = 'pending';
 
       const paginationString = `page[number]=${page}`;
-      const filterString = filters.map(({key, value}) => {
-        return `&filter[${key}]=${value}`;
-      });
+      const filterString = filters.map(({ key, value }) => (`&filter[${key}]=${value}`));
 
       try {
         const response = yield fetch(`${baseUrl}/books?${paginationString}${filterString}`);
@@ -43,4 +38,4 @@ export const BookStore = types
         this.loadingState = 'error';
       }
     }),
-  }))
+  }));

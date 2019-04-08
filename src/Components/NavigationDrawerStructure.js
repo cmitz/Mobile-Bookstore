@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 
-import drawerIcon from '../assets/drawer.png';
+import drawerIcon from '../../assets/drawer.png';
 
 export default class NavigationDrawerStructure extends React.Component {
   constructor(props) {
@@ -18,7 +18,8 @@ export default class NavigationDrawerStructure extends React.Component {
     return (
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity
-          onPress={this.toggleDrawer}>
+          onPress={this.toggleDrawer}
+        >
 
           <Image
             source={drawerIcon}

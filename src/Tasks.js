@@ -9,9 +9,6 @@ export const defineLocationBackgroundTask = async () => {
       if (error) {
         console.error(error);
       } else {
-        console.log('locations via background task', [
-          ...locations.map(v => v.coords)
-        ]);
         const location = locations[0];
         const { latitude, longitude } = location.coords;
 

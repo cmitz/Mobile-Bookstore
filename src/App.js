@@ -15,6 +15,9 @@ import RootStore from './Stores/RootStore';
 
 import { defineLocationBackgroundTask } from './Tasks';
 
+const RobotoFont = require('native-base/Fonts/Roboto.ttf');
+const RobotoMediumFont = require('native-base/Fonts/Roboto_medium.ttf');
+
 const AppNavigator = createDrawerNavigator({
   Dashboard: {
     screen: DashboardNavigator
@@ -31,6 +34,7 @@ const AppNavigator = createDrawerNavigator({
 });
 
 const AppContainer = createAppContainer(AppNavigator);
+
 defineLocationBackgroundTask();
 
 export default class App extends React.Component {
@@ -41,8 +45,8 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      Roboto: RobotoFont,
+      Roboto_medium: RobotoMediumFont,
       ...Ionicons.font,
     });
     setCustomText({ style: { fontFamily: 'Roboto' } });

@@ -1,11 +1,13 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "private": true,
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject",
-    "lint": "eslint *.js **/*.js"
+    "lint": "eslint src/*.js src/**/*.js",
+    "test": "node_modules/.bin/jest",
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.1",
@@ -30,11 +32,25 @@
     "@babel/plugin-proposal-decorators": "^7.4.0",
     "babel-eslint": "^10.0.1",
     "babel-preset-expo": "^5.0.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "jest-environment-enzyme": "^7.0.2",
+    "jest-enzyme": "^7.0.2",
+    "jest-expo": "^32.0.0",
+    "react-dom": "16",
+    "react-native-testing-library": "^1.6.2"
   },
-  "private": true
+  "jest": {
+    "preset": "jest-expo",
+    "setupTestFrameworkScriptFile": "jest-enzyme",
+    "testEnvironment": "enzyme",
+    "testEnvironmentOptions": {
+      "enzymeAdapter": "react16"
+    }
+  }
 }
