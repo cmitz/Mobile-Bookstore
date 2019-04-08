@@ -5,12 +5,12 @@ import { shallow } from 'enzyme';
 
 import App from '../src/App';
 
-jest.mock('react-dom');
-
 describe('When App is rendered', () => {
   beforeEach(() => {
     NavigationTestUtils.resetInternalState();
   });
+
+  fetch.mockResponse(JSON.stringify({ data: [] }));
 
   it('does not crash', async () => {
     const tree = shallow(<App />);
